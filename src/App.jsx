@@ -2,7 +2,9 @@ import Wrapper from "./hoc/Wrapper/Wrapper";
 function App() {
   return (
     <>
-    <Wrapper/>
+      <div className="bg-[#F7F7F7]">
+        <Wrapper />
+      </div>
     </>
   );
 }

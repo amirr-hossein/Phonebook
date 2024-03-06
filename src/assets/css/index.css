@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.directionInputSearch {
+  direction: rtl;
+}
+@font-face {
+  font-family: iranSansMed;
+  src: url(../font/IRANSansX-Medium.ttf);
+}
+.addContacts {
+  box-shadow: 0px 4px 32px 0px rgba(152, 68, 71, 0.08);
+}
