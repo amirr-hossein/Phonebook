@@ -1,6 +1,8 @@
+import Wrapper from "./hoc/Wrapper/Wrapper";
 function App() {
   return (
     <>
+    <Wrapper/>
     </>
   );
 }
