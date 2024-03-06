@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom";
 import iconSearch from "../../assets/img/iconSearch.png";
 import add from "../../assets/img/add.png";
-const Navbar = () => {
+const Navbar = ({modal}) => {
   return (
     <>
-      <div className="flex justify-center pt-[48px]">
+      <div className="flex justify-center pt-[48px] mb-[32px] container mx-auto">
         <div className="relative cursor-pointer mr-[16px]">
           <div className="w-[133px] h-[40px] rounded-[12px] bg-[#984447] addContacts flex justify-end items-center">
             <Link
               className="text-white mx-[8px] text-[14px] font-med"
               to={"/contacts/add"}
+              onClick={modal}
             >
               افزودن مخاطب
             </Link>
