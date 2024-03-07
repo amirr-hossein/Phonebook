@@ -6,7 +6,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily:{
-        med:["iranSansMed"]
+        med:["iranSansMed"],
+        bol:["iranSansBold"]
       }
     },
   },
