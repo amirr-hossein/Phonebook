@@ -1,4 +1,4 @@
 const Backdrop=(props)=>{
-    return props.modal ? null : <div className={"backdrop"} onClick={props.click}></div>
+    return props.modal ? <div className={"backdrop bg-black opacity-25"} onClick={props.close}></div> : null
 }
 export default Backdrop

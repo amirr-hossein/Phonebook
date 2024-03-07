@@ -5,15 +5,20 @@ import { useState } from "react";
 
 const Wrapper = () => {
   const [isModal, setIsModal] = useState(false);
-  const modalClicker=()=>{
-    setIsModal(!isModal)
-}
+  const modalClicker = () => {
+    setIsModal(true);
+  };
+  const closeModal=()=>{
+    setIsModal(false)
+  }
   return (
     <>
-      <Navbar modal={modalClicker} modalBack={isModal} />
-      {isModal ?<ModalAddContact/>:null}
-      {/* <ModalAddContact /> */}
+      <div className="container mx-auto relative">
+      <Navbar modal={modalClicker} />
+      {isModal ? <ModalAddContact modalBack={closeModal} stateModal={isModal}/> : null}
       <Routing />
+
+      </div>
     </>
   );
 };

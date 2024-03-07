@@ -1,11 +1,13 @@
 import Backdrop from "../Ui/Backdrop/Backdrop";
 
-const ModalAddContact = ({modalBack}) => {
+const ModalAddContact = ({modalBack,stateModal}) => {
   return (
     <>
-      <Backdrop modal={modalBack} />
-      <div className="container mx-auto">
-        <div className="w-[358px] h-[632px]"></div>
+      <Backdrop close={modalBack} modal={stateModal} />
+      <div className="flex justify-center modals"> 
+        <div className="w-[358px] h-[632px] rounded-[24px] bg-[#F7F7F7]">
+          add contacts
+        </div>
       </div>
     </>
   );
