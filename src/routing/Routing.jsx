@@ -1,6 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import Contacts from "../components/Contact/contact";
-import EditContact from "../components/EditContact/EditContacts";
+import Contacts from "../components/Contacts/Contacts";
 const Routing = () => {
   return (
     <>
@@ -8,7 +7,6 @@ const Routing = () => {
         <Routes>
           <Route path="/" element={<Navigate to="/contacts" />} />
           <Route path="/contacts" element={<Contacts />} />
-          {/* <Route path="/contacts/edit/:contactId" element={<EditContact />} /> */}
         </Routes>
       </div>
     </>
