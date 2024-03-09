@@ -1,5 +1,46 @@
 {
-  "contacts": [],
+  "contacts": [
+    {
+      "id": "fe26",
+      "images": [
+        {
+          "image": "gallery-add.png"
+        }
+      ]
+    },
+    {
+      "id": "b3e4",
+      "images": [
+        {
+          "image": "trash.png"
+        }
+      ]
+    },
+    {
+      "id": "d2bc",
+      "images": [
+        {
+          "image": "trash.png"
+        }
+      ]
+    },
+    {
+      "id": "83ce",
+      "images": [
+        {
+          "image": "photo_2024-01-26_00-29-54.png"
+        }
+      ]
+    },
+    {
+      "id": "d3b7",
+      "images": [
+        {
+          "image": "imageClient.png"
+        }
+      ]
+    }
+  ],
   "groups": [
     {
       "id": "1",

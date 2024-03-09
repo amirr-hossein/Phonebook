@@ -2,20 +2,36 @@ import Backdrop from "../Ui/Backdrop/Backdrop";
 import gallaryAdd from "../../assets/img/gallery-add.png";
 import addimage from "../../assets/img/addimage.png";
 import trash from "../../assets/img/trash.png";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 // import { all } from "../../axios/axios";
 import axios from "axios";
 
 const ModalAddContact = ({ modalBack, stateModal }) => {
   const [selectedFile, setSelectedFile] = useState("");
+  const [images, setImages] = useState([]);
+  const [uploadedImage, setUploadedImage] = useState("");
+
+
+  useEffect(() => {
+    // Fetch images from the server
+    axios.get("http://localhost:4000/contacts").then((response) => {
+      setImages(response.data);
+    });
+  }, []);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
+    setUploadedImage(URL.createObjectURL(event.target.files[0])); // اضافه کردن تصویر به state
+
   };
  
   const handleUpload = () => {
     const a={
-      amir:selectedFile.name
+      images: [
+        {
+          image: `${selectedFile.name}`
+        },
+      ]
     }
     axios.post("http://localhost:4000/contacts", a).then((res) => {
       console.log(res);
@@ -37,7 +53,7 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
             <div className="w-[120px] h-[120px] rounded-full bg-white relative">
               <img
                 className="absolute top-[31px] left-[31px]"
-                src={gallaryAdd}
+                src={uploadedImage || gallaryAdd} 
                 alt=""
               />
             </div>
