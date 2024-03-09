@@ -1,10 +1,30 @@
 import Backdrop from "../Ui/Backdrop/Backdrop";
 import gallaryAdd from "../../assets/img/gallery-add.png";
 import addimage from "../../assets/img/addimage.png";
+import trash from "../../assets/img/trash.png";
+import { useState } from "react";
+// import { all } from "../../axios/axios";
+import axios from "axios";
+
 const ModalAddContact = ({ modalBack, stateModal }) => {
+  const [selectedFile, setSelectedFile] = useState("");
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+ 
+  const handleUpload = () => {
+    const a={
+      amir:selectedFile.name
+    }
+    axios.post("http://localhost:4000/contacts", a).then((res) => {
+      console.log(res);
+    }).catch((er)=>console.log(er))
+  };
   const getFile = () => {
     document.getElementById("upfile").click();
   };
+
   return (
     <>
       <Backdrop close={modalBack} modal={stateModal} />
@@ -22,19 +42,21 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
               />
             </div>
           </div>
-          <form>
+          <form className="flex justify-center flex-row-reverse mt-[8px]">
             <div
-              className="w-[40px] h-[40px] bg-[#EADADA] rounded-[12px] flex justify-center items-center gradImage"
+              className="w-[40px] h-[40px] bg-[#EADADA] rounded-[12px] flex justify-center items-center gradImage cursor-pointer"
               onClick={getFile}
             >
               <img src={addimage} alt="" />
-              {document.getElementById("upfile")?.files[0]?.name}
             </div>
             <div style={{ height: "0px", width: "0px", overflow: "hidden" }}>
-              <input id="upfile" type="file" />
+              <input id="upfile" type="file" onChange={handleFileChange} />
             </div>
-            <div>
-              <img src={blank} alt="" />
+            <div
+              className="w-[40px] h-[40px] bg-[#EADADA] rounded-[12px] flex justify-center items-center gradImage mr-[16px] cursor-pointer"
+              onClick={handleUpload}
+            >
+              <img src={trash} alt="" />
             </div>
           </form>
         </div>
@@ -42,4 +64,5 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
     </>
   );
 };
+
 export default ModalAddContact;
