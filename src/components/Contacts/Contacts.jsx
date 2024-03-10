@@ -22,7 +22,7 @@ const Contacts = () => {
           {contact.images.map((image, index) => (
             <img
               key={index}
-              src={`/src/assets/img/${image.image}`}
+              src={image.image}
               alt={`Image ${index}`}
               style={{ maxWidth: "200px", maxHeight: "200px", margin: "10px" }}
             />
