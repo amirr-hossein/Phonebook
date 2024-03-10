@@ -7,7 +7,8 @@ module.exports = {
     extend: {
       fontFamily:{
         med:["iranSansMed"],
-        bol:["iranSansBold"]
+        bol:["iranSansBold"],
+        reg:["iranSansReg"],
       }
     },
   },

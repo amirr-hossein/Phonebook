@@ -2,6 +2,7 @@ import Backdrop from "../Ui/Backdrop/Backdrop";
 import gallaryAdd from "../../assets/img/gallery-add.png";
 import addimage from "../../assets/img/addimage.png";
 import trash from "../../assets/img/trash.png";
+import user from "../../assets/img/user.png";
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 
@@ -70,21 +71,38 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
               />
             </div>
           </div>
-          <form className="flex justify-center flex-row-reverse mt-[8px]">
-            <div
-              className="w-[40px] h-[40px] bg-[#EADADA] rounded-[12px] flex justify-center items-center gradImage cursor-pointer"
-              onClick={getFile}
-            >
-              <img src={addimage} alt="" />
+          <form className="flex justify-center flex-row-reverse mt-[8px] flex-col">
+            <div className="flex justify-center flex-row-reverse">
+              <div
+                className="w-[40px] h-[40px] bg-[#EADADA] rounded-[12px] flex justify-center items-center gradImage cursor-pointer"
+                onClick={getFile}
+              >
+                <img src={addimage} alt="" />
+              </div>
+              <div style={{ height: "0px", width: "0px", overflow: "hidden" }}>
+                <input ref={files} type="file" onChange={handleFileChange} />
+              </div>
+              <div
+                className="w-[40px] h-[40px] bg-[#EADADA] rounded-[12px] flex justify-center items-center gradImage mr-[16px] cursor-pointer"
+                onClick={deleteImage}
+              >
+                <img src={trash} alt="" />
+              </div>
             </div>
-            <div style={{ height: "0px", width: "0px", overflow: "hidden" }}>
-              <input ref={files} type="file" onChange={handleFileChange} />
-            </div>
-            <div
-              className="w-[40px] h-[40px] bg-[#EADADA] rounded-[12px] flex justify-center items-center gradImage mr-[16px] cursor-pointer"
-              onClick={deleteImage}
-            >
-              <img src={trash} alt="" />
+            <div className="mx-[16px] mt-[8px]">
+              <div className="flex flex-col items-end">
+                <h1 className="text-end font-reg text-[14px] mb-[4px]" htmlFor="">
+                  نام مخاطب
+                </h1>
+                <div className="relative">
+                  <img className="absolute right-[8px] top-[10px]" src={user} alt="" />
+                  <input
+                    type="text"
+                    className="outline-none rounded-[12px] border border-solid border-[#E6E6E6] w-[326px] h-[40px] bg-white pr-[33px]"
+                    dir="rtl"
+                  />
+                </div>
+              </div>
             </div>
           </form>
         </div>
