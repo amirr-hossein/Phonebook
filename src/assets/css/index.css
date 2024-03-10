@@ -60,3 +60,15 @@
 .gradImage {
   box-shadow: 0px 4px 32px 0px rgba(152, 68, 71, 0.08);
 }
+
+.groupDrop:after {
+  content: url(../img/arrow-down.png);
+  position: absolute;
+  top: 10px;
+  left: 16px;
+}
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
