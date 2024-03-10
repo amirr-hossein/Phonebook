@@ -43,9 +43,13 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
   };
   useEffect(() => {
     if (uploadedImage) {
-      const a = {
-        image: uploadedImage,
-      };
+      const a={
+        images: [
+          {
+            image: uploadedImage
+          },
+        ]
+      }
       axios
         .post("http://localhost:4000/contacts", a)
         .then((res) => {
