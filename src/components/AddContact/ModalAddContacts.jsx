@@ -6,12 +6,21 @@ import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 
 const ModalAddContact = ({ modalBack, stateModal }) => {
-  const [selectedFile, setSelectedFile] = useState(null);
   const [uploadedImage, setUploadedImage] = useState("");
+  const [data, setData] = useState("");
   const files = useRef();
+
+  const deleteImage = () => {
+    axios
+      .delete(`http://localhost:4000/contacts/${data}`)
+      .then((res) => {
+        console.log(res);
+        setUploadedImage("");
+      })
+      .catch((er) => console.log(er));
+  };
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    setSelectedFile(file);
 
     const reader = new FileReader();
 
@@ -23,36 +32,22 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
       reader.readAsDataURL(file);
     }
   };
-  // const handleUpload = () => {
-  //   const a = {
-  //     images: [
-  //       {
-  //         image: uploadedImage,
-  //       },
-  //     ],
-  //   };
-  //   axios
-  //     .post("http://localhost:4000/contacts", a)
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((er) => console.log(er));
-  // };
   const getFile = () => {
     files.current.click();
   };
   useEffect(() => {
     if (uploadedImage) {
-      const a={
+      const a = {
         images: [
           {
-            image: uploadedImage
+            image: uploadedImage,
           },
-        ]
-      }
+        ],
+      };
       axios
         .post("http://localhost:4000/contacts", a)
         .then((res) => {
+          setData(res.data.id);
           console.log(res);
         })
         .catch((er) => console.log(er));
@@ -85,7 +80,10 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
             <div style={{ height: "0px", width: "0px", overflow: "hidden" }}>
               <input ref={files} type="file" onChange={handleFileChange} />
             </div>
-            <div className="w-[40px] h-[40px] bg-[#EADADA] rounded-[12px] flex justify-center items-center gradImage mr-[16px] cursor-pointer">
+            <div
+              className="w-[40px] h-[40px] bg-[#EADADA] rounded-[12px] flex justify-center items-center gradImage mr-[16px] cursor-pointer"
+              onClick={deleteImage}
+            >
               <img src={trash} alt="" />
             </div>
           </form>
