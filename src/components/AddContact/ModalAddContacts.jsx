@@ -42,19 +42,17 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
     files.current.click();
   };
   useEffect(() => {
-    const a = {
-      images: [
-        {
-          image: uploadedImage,
-        },
-      ],
-    };
-    axios
-      .post("http://localhost:4000/contacts", a)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((er) => console.log(er));
+    if (uploadedImage) {
+      const a = {
+        image: uploadedImage,
+      };
+      axios
+        .post("http://localhost:4000/contacts", a)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((er) => console.log(er));
+    }
   }, [uploadedImage]);
   return (
     <>

@@ -17,17 +17,13 @@ const Contacts = () => {
       contacts
       <Contact />
       <Loader />
-      {images.map((contact) => (
-        <div key={contact.id}>
-          {contact.images.map((image, index) => (
-            <img
-              key={index}
-              src={image.image}
-              alt={`Image ${index}`}
-              style={{ maxWidth: "200px", maxHeight: "200px", margin: "10px" }}
-            />
-          ))}
-        </div>
+      {images.map((image, index) => (
+        <img
+          key={index}
+          src={image.image}
+          alt={`Image ${index}`}
+          style={{ maxWidth: "200px", maxHeight: "200px", margin: "10px" }}
+        />
       ))}
     </>
   );
