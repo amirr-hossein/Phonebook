@@ -10,10 +10,10 @@ import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 
 const ModalAddContact = ({ modalBack, stateModal }) => {
-  const [uploadedImage, setUploadedImage] = useState("");
   const [data, setData] = useState("");
   const files = useRef();
   const [getGroups, setGroups] = useState([]);
+  const [update, setUpdate] = useState(false);
   const [getContact, setContact] = useState({
     fullname: "",
     photo: "",
@@ -21,12 +21,16 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
     job: "",
     group: "",
   });
+  const send=()=>{
+    setUpdate(true)
+  }
   const setContactInfo = (event) => {
     setContact({
       ...getContact,
       [event.target.name]: event.target.value,
     });
   };
+  // for get as api for groups
   useEffect(() => {
     axios.get("http://localhost:4000/groups").then((res) => {
       setGroups(res.data);
@@ -37,7 +41,10 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
       .delete(`http://localhost:4000/contacts/${data}`)
       .then((res) => {
         console.log(res);
-        setUploadedImage("");
+        setContact({
+          ...getContact,
+          photo:""
+        });
       })
       .catch((er) => console.log(er));
   };
@@ -47,7 +54,10 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
     const reader = new FileReader();
 
     reader.onloadend = () => {
-      setUploadedImage(reader.result);
+      setContact({
+        ...getContact,
+        photo:reader.result
+      });
     };
 
     if (file) {
@@ -58,24 +68,19 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
     files.current.click();
   };
   useEffect(() => {
-    if (uploadedImage) {
-      const a = {
-        images: [
-          {
-            image: uploadedImage,
-          },
-        ],
+    if (getContact.photo) {
+      const datas = {
         info: getContact,
       };
       axios
-        .post("http://localhost:4000/contacts", a)
+        .post("http://localhost:4000/contacts", datas)
         .then((res) => {
           setData(res.data.id);
           console.log(res);
         })
         .catch((er) => console.log(er));
     }
-  }, [uploadedImage]);
+  }, [update]);
   return (
     <>
       <Backdrop close={modalBack} modal={stateModal} />
@@ -88,7 +93,7 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
             <div className="w-[120px] h-[120px] rounded-full bg-white flex justify-center items-center overflow-hidden">
               <img
                 className="object-cover rounded-full cursor-pointer"
-                src={uploadedImage || gallaryAdd}
+                src={getContact.photo || gallaryAdd}
                 alt=""
               />
             </div>
@@ -102,6 +107,7 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
                 <img src={addimage} alt="" />
               </div>
               <div style={{ height: "0px", width: "0px", overflow: "hidden" }}>
+                {/* input file for getting image */}
                 <input ref={files} type="file" onChange={handleFileChange} />
               </div>
               <div
@@ -204,7 +210,7 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
                     <option value="">انتخاب</option>
                     {getGroups.length > 0 &&
                       getGroups.map((group) => (
-                        <option key={group.id} value={group.id}>
+                        <option key={group.id} value={group.name}>
                           {group.name}
                         </option>
                       ))}
@@ -212,7 +218,7 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
                 </div>
               </div>
               <div>
-                <button>ثبت</button>
+                <button onClick={send}>ثبت</button>
               </div>
             </div>
           </form>

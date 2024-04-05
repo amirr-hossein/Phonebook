@@ -2,16 +2,16 @@ import Contact from "../Contact/contact";
 import Loader from "../Ui/loader/Loader";
 import { useState, useEffect } from "react";
 import axios from "axios";
-// import as from "../../assets/img/trash.png"
 const Contacts = () => {
   const [images, setImages] = useState([]);
-
   useEffect(() => {
     // Fetch images from the server
     axios.get("http://localhost:4000/contacts").then((response) => {
       setImages(response.data);
+      // console.log(response.data)
     });
   }, []);
+  console.log(images);
   return (
     <>
       contacts
@@ -19,14 +19,14 @@ const Contacts = () => {
       <Loader />
       {images.map((contact) => (
         <div key={contact.id}>
-          {contact.images.map((image, index) => (
-            <img
-              key={index}
-              src={image.image}
-              alt={`Image ${index}`}
-              style={{ maxWidth: "200px", maxHeight: "200px", margin: "10px" }}
-            />
-          ))}
+          <img
+            src={contact.info.photo}
+            style={{ maxWidth: "200px", maxHeight: "200px", margin: "10px" }}
+          />
+          <p>{contact.info.fullname}</p>
+          <p>{contact.info.mobile}</p>
+          <p>{contact.info.job}</p>
+          <p>{contact.info.group}</p>
         </div>
       ))}
     </>
