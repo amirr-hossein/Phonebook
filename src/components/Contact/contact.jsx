@@ -1,19 +1,22 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+
 const Contact = () => {
-  const [images, setImages] = useState([]);
+  const [contacts, setContacts] = useState([]);
+
   useEffect(() => {
-    // Fetch images from the server
+    // Fetch contacts from the server
     axios.get("http://localhost:4000/contacts").then((response) => {
-      setImages(response.data);
+      setContacts(response.data);
     });
   }, []);
+
   return (
     <>
-      {images.map((contact) => (
+      {contacts.map((contact) => (
         <div key={contact.id}>
           <img
-            src={contact.info.photo}
+            src={contact.images[0].image} // نمایش عکس
             style={{ maxWidth: "200px", maxHeight: "200px", margin: "10px" }}
           />
           <p>{contact.info.fullname}</p>
@@ -25,4 +28,5 @@ const Contact = () => {
     </>
   );
 };
+
 export default Contact;

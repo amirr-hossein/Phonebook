@@ -10,20 +10,22 @@ import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 
 const ModalAddContact = ({ modalBack, stateModal }) => {
-  const [data, setData] = useState("");
+  const [uploadedImage, setUploadedImage] = useState("");
+  const [data, setData] = useState(""); // آی‌دی مخاطب
   const files = useRef();
   const [getGroups, setGroups] = useState([]);
+  const [isContactAdded, setIsContactAdded] = useState(false);
   const [update, setUpdate] = useState(false);
   const [getContact, setContact] = useState({
     fullname: "",
-    photo: "",
     mobile: "",
     job: "",
     group: "",
   });
-  const send=()=>{
-    setUpdate(true)
-  }
+  // console.log(data)
+  const send = () => {
+    setUpdate(true);
+  };
   const setContactInfo = (event) => {
     setContact({
       ...getContact,
@@ -35,52 +37,65 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
     axios.get("http://localhost:4000/groups").then((res) => {
       setGroups(res.data);
     });
-  });
+  }, []);
+
   const deleteImage = () => {
+    if (!data) {
+      console.error("Contact ID is not available.");
+      return;
+    }
     axios
       .delete(`http://localhost:4000/contacts/${data}`)
       .then((res) => {
         console.log(res);
-        setContact({
-          ...getContact,
-          photo:""
-        });
+        setUploadedImage("")
       })
-      .catch((er) => console.log(er));
+      .catch((er) => {
+        console.error(
+          "Error deleting image:",
+          er.response ? er.response.data : er.message
+        );
+      });
   };
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-
     const reader = new FileReader();
 
     reader.onloadend = () => {
-      setContact({
-        ...getContact,
-        photo:reader.result
-      });
+      setUploadedImage(reader.result);
     };
 
     if (file) {
       reader.readAsDataURL(file);
     }
   };
+
   const getFile = () => {
     files.current.click();
   };
+
   useEffect(() => {
-    if (getContact.photo) {
+    if (update && !isContactAdded) {
       const datas = {
+        images: [
+          {
+            image: uploadedImage,
+          },
+        ],
         info: getContact,
       };
       axios
         .post("http://localhost:4000/contacts", datas)
         .then((res) => {
-          setData(res.data.id);
+          setData(res.data.id); // بروزرسانی آی‌دی مخاطب
+          setIsContactAdded(true);
           console.log(res);
         })
         .catch((er) => console.log(er));
     }
-  }, [update]);
+  }, [update, isContactAdded, getContact, uploadedImage]);
+
   return (
     <>
       <Backdrop close={modalBack} modal={stateModal} />
@@ -93,7 +108,7 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
             <div className="w-[120px] h-[120px] rounded-full bg-white flex justify-center items-center overflow-hidden">
               <img
                 className="object-cover rounded-full cursor-pointer"
-                src={getContact.photo || gallaryAdd}
+                src={uploadedImage || gallaryAdd}
                 alt=""
               />
             </div>

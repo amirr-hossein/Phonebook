@@ -3,7 +3,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import Loader from "../../components/Ui/loader/Loader";
 import { useState } from "react";
 const Wrapper = ({ modalClicker }) => {
-  const [loader, setLoader] = useState(false);
+  const [loader, setLoader] = useState(true);
   return (
     <>
       <div className="container mx-auto relative h-full">
