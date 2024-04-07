@@ -127,7 +127,7 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
             er.response ? er.response.data : er.message
           );
         });
-    }, 5000);
+    }, 2000);
   }, [data, update]);
 
   return (
