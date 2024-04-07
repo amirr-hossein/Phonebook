@@ -14,7 +14,6 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
   const [data, setData] = useState(""); // آی‌دی مخاطب
   const files = useRef();
   const [getGroups, setGroups] = useState([]);
-  const [isContactAdded, setIsContactAdded] = useState(false);
   const [update, setUpdate] = useState(false);
   const [getContact, setContact] = useState({
     fullname: "",
@@ -24,7 +23,18 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
   });
   // console.log(data)
   const send = () => {
-    setUpdate(true);
+    // Check if all fields are filled
+    if (
+      getContact.fullname &&
+      getContact.mobile &&
+      getContact.job &&
+      getContact.group &&
+      uploadedImage
+    ) {
+      setUpdate(true);
+    } else {
+      console.error("Please fill all the fields.");
+    }
   };
   const setContactInfo = (event) => {
     setContact({
@@ -48,7 +58,7 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
       .delete(`http://localhost:4000/contacts/${data}`)
       .then((res) => {
         console.log(res);
-        setUploadedImage("")
+        setUploadedImage("");
       })
       .catch((er) => {
         console.error(
@@ -74,9 +84,22 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
   const getFile = () => {
     files.current.click();
   };
-
   useEffect(() => {
-    if (update && !isContactAdded) {
+    if (uploadedImage) {
+      const datas = {
+        image: uploadedImage,
+      };
+      axios
+        .post("http://localhost:4000/contacts", datas)
+        .then((res) => {
+          setData(res.data.id);
+          console.log(res);
+        })
+        .catch((er) => console.log(er));
+    }
+  }, [uploadedImage]);
+  useEffect(() => {
+    if (update) {
       const datas = {
         images: [
           {
@@ -88,13 +111,11 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
       axios
         .post("http://localhost:4000/contacts", datas)
         .then((res) => {
-          setData(res.data.id); // بروزرسانی آی‌دی مخاطب
-          setIsContactAdded(true);
           console.log(res);
         })
         .catch((er) => console.log(er));
     }
-  }, [update, isContactAdded, getContact, uploadedImage]);
+  }, [update]);
 
   return (
     <>
@@ -123,7 +144,12 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
               </div>
               <div style={{ height: "0px", width: "0px", overflow: "hidden" }}>
                 {/* input file for getting image */}
-                <input ref={files} type="file" onChange={handleFileChange} />
+                <input
+                  required
+                  ref={files}
+                  type="file"
+                  onChange={handleFileChange}
+                />
               </div>
               <div
                 className="w-[40px] h-[40px] bg-[#EADADA] rounded-[12px] flex justify-center items-center gradImage mr-[16px] cursor-pointer"
@@ -147,6 +173,7 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
                     alt=""
                   />
                   <input
+                    required
                     type="text"
                     className="outline-none rounded-[12px] border border-solid border-[#E6E6E6] w-[326px] h-[40px] bg-white pr-[33px]"
                     dir="rtl"
@@ -170,6 +197,7 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
                     alt=""
                   />
                   <input
+                    required
                     type="text"
                     className="outline-none rounded-[12px] border border-solid border-[#E6E6E6] w-[326px] h-[40px] bg-white pr-[33px]"
                     dir="rtl"
@@ -193,6 +221,7 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
                     alt=""
                   />
                   <input
+                    required
                     type="text"
                     className="outline-none rounded-[12px] border border-solid border-[#E6E6E6] w-[326px] h-[40px] bg-white pr-[33px]"
                     dir="rtl"
@@ -216,6 +245,7 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
                     alt=""
                   />
                   <select
+                    required
                     className="outline-none rounded-[12px] border border-solid border-[#E6E6E6] w-[326px] h-[40px] bg-white pr-[33px] pl-[16px]"
                     dir="rtl"
                     name="group"

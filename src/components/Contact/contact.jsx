@@ -15,14 +15,16 @@ const Contact = () => {
     <>
       {contacts.map((contact) => (
         <div key={contact.id}>
-          <img
-            src={contact.images[0].image} // نمایش عکس
-            style={{ maxWidth: "200px", maxHeight: "200px", margin: "10px" }}
-          />
-          <p>{contact.info.fullname}</p>
-          <p>{contact.info.mobile}</p>
-          <p>{contact.info.job}</p>
-          <p>{contact.info.group}</p>
+          {contact.images && contact.images.length > 0 ? (
+            <img
+              src={contact.images[0].image} // نمایش عکس
+              style={{ maxWidth: "200px", maxHeight: "200px", margin: "10px" }}
+            />
+          ) : null}
+          <p>{contact.info ? contact.info.fullname : null}</p>
+          <p>{contact.info ? contact.info.mobile : null}</p>
+          <p>{contact.info ? contact.info.job : null}</p>
+          <p>{contact.info ? contact.info.group : null}</p>
         </div>
       ))}
     </>
