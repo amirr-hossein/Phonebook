@@ -15,12 +15,27 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
   const files = useRef();
   const [getGroups, setGroups] = useState([]);
   const [update, setUpdate] = useState(false);
+  const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(true);
   const [getContact, setContact] = useState({
     fullname: "",
     mobile: "",
     job: "",
     group: "",
   });
+  const handleChangeMobile = (e) => {
+    const value = e.target.value;
+    const regex = /^(\+98|0)?9\d{9}$/;
+    if (regex.test(value) || value.trim() === "") {
+      setIsValidPhoneNumber(true);
+      setContactInfo(e); // اگر شماره معتبر است یا خالی است، اطلاعات را ذخیره کن
+    } else {
+      setIsValidPhoneNumber(false);
+    }
+    setContact({
+      ...getContact,
+      [e.target.name]: value,
+    });
+  };
   const send = () => {
     // Check if all fields are filled
     if (
@@ -188,7 +203,7 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
                   <input
                     required
                     type="text"
-                    className="outline-none rounded-[12px] border border-solid border-[#E6E6E6] w-[326px] h-[40px] bg-white pr-[33px]"
+                    className="outline-none rounded-[12px] border border-solid border-[#E6E6E6] w-[326px] h-[40px] bg-white pr-[33px] text-[#aaa] text-[12px] font-reg"
                     dir="rtl"
                     name="fullname"
                     value={getContact.fullname}
@@ -212,12 +227,19 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
                   <input
                     required
                     type="text"
-                    className="outline-none rounded-[12px] border border-solid border-[#E6E6E6] w-[326px] h-[40px] bg-white pr-[33px]"
+                    className="outline-none rounded-[12px] border border-solid border-[#E6E6E6] w-[326px] h-[40px] bg-white pr-[33px] text-[#aaa] text-[12px] font-reg"
                     dir="rtl"
                     name="mobile"
                     value={getContact.mobile}
-                    onChange={setContactInfo}
+                    onChange={handleChangeMobile}
                   />
+                  <div className="flex justify-end">
+                    {!isValidPhoneNumber && (
+                      <p className="text-red-500 text-[12px] font-reg">
+                        شماره تلفن معتبر نیست
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
               <div className="flex flex-col items-end mb-[8px]">
@@ -236,7 +258,7 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
                   <input
                     required
                     type="text"
-                    className="outline-none rounded-[12px] border border-solid border-[#E6E6E6] w-[326px] h-[40px] bg-white pr-[33px]"
+                    className="outline-none rounded-[12px] border border-solid border-[#E6E6E6] w-[326px] h-[40px] bg-white pr-[33px] text-[#aaa] text-[12px] font-reg"
                     dir="rtl"
                     name="job"
                     value={getContact.job}
@@ -259,24 +281,38 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
                   />
                   <select
                     required
-                    className="outline-none rounded-[12px] border border-solid border-[#E6E6E6] w-[326px] h-[40px] bg-white pr-[33px] pl-[16px]"
+                    className="outline-none rounded-[12px] border border-solid border-[#E6E6E6] w-[326px] h-[40px] bg-white pr-[33px] pl-[16px] text-[#aaa] text-[12px] font-reg"
                     dir="rtl"
                     name="group"
                     value={getContact.group}
                     onChange={setContactInfo}
                   >
-                    <option value="">انتخاب</option>
+                    <option
+                      className="text-[#aaa] text-[12px] font-reg"
+                      value="choose"
+                    >
+                      انتخاب
+                    </option>
                     {getGroups.length > 0 &&
                       getGroups.map((group) => (
-                        <option key={group.id} value={group.name}>
+                        <option
+                          key={group.id}
+                          value={group.name}
+                          className="text-[#aaa] text-[12px] font-reg"
+                        >
                           {group.name}
                         </option>
                       ))}
                   </select>
                 </div>
               </div>
-              <div>
-                <button onClick={send}>ثبت</button>
+              <div className="mt-[16px]">
+                <button
+                  className="w-[326px] h-[40px] rounded-[12px] bg-[#984447] text-white text-[14px] font-reg"
+                  onClick={send}
+                >
+                  افزودن مخاطب
+                </button>
               </div>
             </div>
           </form>
