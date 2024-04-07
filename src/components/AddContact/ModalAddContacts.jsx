@@ -6,164 +6,22 @@ import user from "../../assets/img/user.png";
 import call from "../../assets/img/call.png";
 import brush from "../../assets/img/brush.png";
 import people from "../../assets/img/people.png";
-import { useState, useRef, useEffect } from "react";
-import axios from "axios";
 
-const ModalAddContact = ({ modalBack, stateModal }) => {
-  const [uploadedImage, setUploadedImage] = useState("");
-  const [data, setData] = useState("");
-  const files = useRef();
-  const [getGroups, setGroups] = useState([]);
-  const [update, setUpdate] = useState(false);
-  const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(true);
-  const [getContact, setContact] = useState({
-    fullname: "",
-    mobile: "",
-    job: "",
-    group: "",
-  });
-
-  const formatPhoneNumber = (value) => {
-    if (!value) return value;
-
-    // Remove all non-numeric characters from the string
-    const phoneNumber = value.replace(/\D/g, "");
-
-    // Format the phone number with spaces
-    return phoneNumber.replace(/(\d{4})(\d{3})(\d{3})/, "$1 $2 $3");
-  };
-
-  const handleChangeMobile = (e) => {
-    const value = e.target.value;
-    const formattedValue = formatPhoneNumber(value);
-
-    if (value.trim() === "" || formattedValue === value) {
-      setIsValidPhoneNumber(true);
-    } else {
-      setIsValidPhoneNumber(false);
-    }
-
-    setContact({
-      ...getContact,
-      [e.target.name]: formattedValue,
-    });
-  };
-
-  const send = () => {
-    if (
-      getContact.fullname &&
-      getContact.mobile &&
-      getContact.job &&
-      getContact.group &&
-      uploadedImage
-    ) {
-      setUpdate(true);
-    } else {
-      console.error("Please fill all the fields.");
-    }
-  };
-
-  useEffect(() => {
-    axios.get("http://localhost:4000/groups").then((res) => {
-      setGroups(res.data);
-    });
-  }, []);
-
-  const deleteImage = () => {
-    if (!data) {
-      console.error("Contact ID is not available.");
-      return;
-    }
-    axios
-      .delete(`http://localhost:4000/contacts/${data}`)
-      .then((res) => {
-        console.log(res);
-        setUploadedImage("");
-      })
-      .catch((er) => {
-        console.error(
-          "Error deleting image:",
-          er.response ? er.response.data : er.message
-        );
-      });
-  };
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      setUploadedImage(reader.result);
-    };
-
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const getFile = () => {
-    files.current.click();
-  };
-
-  useEffect(() => {
-    if (uploadedImage) {
-      const datas = {
-        image: uploadedImage,
-      };
-      axios
-        .post("http://localhost:4000/contacts", datas)
-        .then((res) => {
-          setData(res.data.id);
-          console.log(res);
-        })
-        .catch((er) => console.log(er));
-    }
-  }, [uploadedImage]);
-
-  useEffect(() => {
-    if (update) {
-      const datas = {
-        images: [
-          {
-            image: uploadedImage,
-          },
-        ],
-        info: getContact,
-      };
-      axios
-        .post("http://localhost:4000/contacts", datas)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((er) => console.log(er));
-    }
-  }, [update]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      axios
-        .delete(`http://localhost:4000/contacts/${data}`)
-        .then((res) => {
-          console.log(`delete with timeout ${res}`);
-        })
-        .catch((er) => {
-          console.error(
-            "Error deleting image:",
-            er.response ? er.response.data : er.message
-          );
-        });
-    }, 2000);
-  }, [data, update]);
-
-  useEffect(() => {
-    if (getContact.mobile) {
-      setContact({
-        ...getContact,
-        mobile: formatPhoneNumber(getContact.mobile),
-      });
-    }
-  }, [getContact.mobile]);
-
+const ModalAddContact = ({
+  modalBack,
+  stateModal,
+  uploadedImage,
+  getFile,
+  files,
+  handleFileChange,
+  deleteImage,
+  getContact,
+  handleChangeMobile,
+  isValidPhoneNumber,
+  getGroups,
+  send,
+  setContact
+}) => {
   return (
     <>
       <Backdrop close={modalBack} modal={stateModal} />
