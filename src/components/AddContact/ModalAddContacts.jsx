@@ -11,7 +11,7 @@ import axios from "axios";
 
 const ModalAddContact = ({ modalBack, stateModal }) => {
   const [uploadedImage, setUploadedImage] = useState("");
-  const [data, setData] = useState(""); // آی‌دی مخاطب
+  const [data, setData] = useState("");
   const files = useRef();
   const [getGroups, setGroups] = useState([]);
   const [update, setUpdate] = useState(false);
@@ -21,7 +21,6 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
     job: "",
     group: "",
   });
-  // console.log(data)
   const send = () => {
     // Check if all fields are filled
     if (
@@ -67,7 +66,6 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
         );
       });
   };
-
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -116,6 +114,21 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
         .catch((er) => console.log(er));
     }
   }, [update]);
+  useEffect(() => {
+    setTimeout(() => {
+      axios
+        .delete(`http://localhost:4000/contacts/${data}`)
+        .then((res) => {
+          console.log(`delete with timeout ${res}`);
+        })
+        .catch((er) => {
+          console.error(
+            "Error deleting image:",
+            er.response ? er.response.data : er.message
+          );
+        });
+    }, 5000);
+  }, [data, update]);
 
   return (
     <>
