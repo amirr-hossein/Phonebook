@@ -22,22 +22,34 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
     job: "",
     group: "",
   });
+
+  const formatPhoneNumber = (value) => {
+    if (!value) return value;
+
+    // Remove all non-numeric characters from the string
+    const phoneNumber = value.replace(/\D/g, "");
+
+    // Format the phone number with spaces
+    return phoneNumber.replace(/(\d{4})(\d{3})(\d{3})/, "$1 $2 $3");
+  };
+
   const handleChangeMobile = (e) => {
     const value = e.target.value;
-    const regex = /^(\+98|0)?9\d{9}$/;
-    if (regex.test(value) || value.trim() === "") {
+    const formattedValue = formatPhoneNumber(value);
+
+    if (value.trim() === "" || formattedValue === value) {
       setIsValidPhoneNumber(true);
-      setContactInfo(e); // اگر شماره معتبر است یا خالی است، اطلاعات را ذخیره کن
     } else {
       setIsValidPhoneNumber(false);
     }
+
     setContact({
       ...getContact,
-      [e.target.name]: value,
+      [e.target.name]: formattedValue,
     });
   };
+
   const send = () => {
-    // Check if all fields are filled
     if (
       getContact.fullname &&
       getContact.mobile &&
@@ -50,13 +62,7 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
       console.error("Please fill all the fields.");
     }
   };
-  const setContactInfo = (event) => {
-    setContact({
-      ...getContact,
-      [event.target.name]: event.target.value,
-    });
-  };
-  // for get as api for groups
+
   useEffect(() => {
     axios.get("http://localhost:4000/groups").then((res) => {
       setGroups(res.data);
@@ -81,6 +87,7 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
         );
       });
   };
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -97,6 +104,7 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
   const getFile = () => {
     files.current.click();
   };
+
   useEffect(() => {
     if (uploadedImage) {
       const datas = {
@@ -111,6 +119,7 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
         .catch((er) => console.log(er));
     }
   }, [uploadedImage]);
+
   useEffect(() => {
     if (update) {
       const datas = {
@@ -129,6 +138,7 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
         .catch((er) => console.log(er));
     }
   }, [update]);
+
   useEffect(() => {
     setTimeout(() => {
       axios
@@ -144,6 +154,15 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
         });
     }, 2000);
   }, [data, update]);
+
+  useEffect(() => {
+    if (getContact.mobile) {
+      setContact({
+        ...getContact,
+        mobile: formatPhoneNumber(getContact.mobile),
+      });
+    }
+  }, [getContact.mobile]);
 
   return (
     <>
@@ -207,7 +226,9 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
                     dir="rtl"
                     name="fullname"
                     value={getContact.fullname}
-                    onChange={setContactInfo}
+                    onChange={(e) =>
+                      setContact({ ...getContact, fullname: e.target.value })
+                    }
                   />
                 </div>
               </div>
@@ -228,7 +249,7 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
                     required
                     type="text"
                     className="outline-none rounded-[12px] border border-solid border-[#E6E6E6] w-[326px] h-[40px] bg-white pr-[33px] text-[#aaa] text-[12px] font-reg"
-                    dir="rtl"
+                    dir="ltr"
                     name="mobile"
                     value={getContact.mobile}
                     onChange={handleChangeMobile}
@@ -262,7 +283,9 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
                     dir="rtl"
                     name="job"
                     value={getContact.job}
-                    onChange={setContactInfo}
+                    onChange={(e) =>
+                      setContact({ ...getContact, job: e.target.value })
+                    }
                   />
                 </div>
               </div>
@@ -285,7 +308,9 @@ const ModalAddContact = ({ modalBack, stateModal }) => {
                     dir="rtl"
                     name="group"
                     value={getContact.group}
-                    onChange={setContactInfo}
+                    onChange={(e) =>
+                      setContact({ ...getContact, group: e.target.value })
+                    }
                   >
                     <option
                       className="text-[#aaa] text-[12px] font-reg"

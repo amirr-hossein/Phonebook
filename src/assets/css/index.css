@@ -72,3 +72,12 @@ select {
   -moz-appearance: none;
   appearance: none;
 }
+.contact {
+  box-shadow: 0px 4px 32px 0px rgba(0, 0, 0, 0.03);
+}
+.shDelete {
+  box-shadow: 0px 4px 32px 0px rgba(152, 68, 71, 0.08);
+}
+.shEdit {
+  box-shadow: 0px 4px 32px 0px rgba(152, 68, 71, 0.08);
+}
