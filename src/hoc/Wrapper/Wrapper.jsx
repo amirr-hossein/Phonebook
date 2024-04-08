@@ -1,15 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import ModalAddContact from "../../components/AddContact/ModalAddContacts";
+import ModalDeleteContact from "../../components/ModalDeleteContact/ModalDeleteContact";
 import All from "../All/All";
 function Wrapper() {
   const [isModal, setIsModal] = useState(false);
-  const modalShow = () => {
-    setIsModal(true);
-  };
-  const closeModal = () => {
-    setIsModal(false);
-  };
+  const [isModalDelete, setIsModalDelete] = useState(false);
   const [loader, setLoader] = useState(true);
   const [uploadedImage, setUploadedImage] = useState("");
   const [data, setData] = useState("");
@@ -17,6 +13,7 @@ function Wrapper() {
   const [getGroups, setGroups] = useState([]);
   const [update, setUpdate] = useState(false);
   const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(true);
+  const [contacts, setContacts] = useState([]);
   const [getContact, setContact] = useState({
     id: Date.now().toString(),
     fullname: "",
@@ -24,7 +21,12 @@ function Wrapper() {
     job: "",
     group: "",
   });
-
+  const modalShow = () => {
+    setIsModal(true);
+  };
+  const closeModal = () => {
+    setIsModal(false);
+  };
   const formatPhoneNumber = (value) => {
     if (!value) return value;
     const phoneNumber = value.replace(/\D/g, "");
@@ -161,7 +163,6 @@ function Wrapper() {
       });
     }
   }, [getContact.mobile]);
-  const [contacts, setContacts] = useState([]);
 
   useEffect(() => {
     // Fetch contacts from the server
@@ -171,24 +172,27 @@ function Wrapper() {
     });
   }, []);
   const deleteContact = (contactId) => {
-    axios
-      .delete(`http://localhost:4000/contacts/${contactId}`)
-      .then((res) => {
-        console.log(
-          `Contact with ID ${contactId} deleted successfully: ${res}`
-        );
-        setContacts((prevContacts) =>
-          prevContacts.filter((c) => c.id !== contactId)
-        )
-      })
-      .catch((er) => {
-        console.error(
-          "Error deleting contact:",
-          er.response ? er.response.data : er.message
-        );
-      });
+    setIsModalDelete(true)
+    // axios
+    //   .delete(`http://localhost:4000/contacts/${contactId}`)
+    //   .then((res) => {
+    //     console.log(
+    //       `Contact with ID ${contactId} deleted successfully: ${res}`
+    //     );
+    //     setContacts((prevContacts) =>
+    //       prevContacts.filter((c) => c.id !== contactId)
+    //     );
+    //   })
+    //   .catch((er) => {
+    //     console.error(
+    //       "Error deleting contact:",
+    //       er.response ? er.response.data : er.message
+    //     );
+    //   });
   };
-
+  const closeModalDelete=()=>{
+    setIsModalDelete(false)
+  }
   return (
     <>
       {isModal ? (
@@ -208,6 +212,7 @@ function Wrapper() {
           setContact={setContact}
         />
       ) : null}
+      {isModalDelete ? <ModalDeleteContact stateModal={isModalDelete} modalBack={closeModalDelete} /> : null}
       <div
         className="bg-[#F7F7F7] h-[100vh]"
         style={{ filter: isModal ? "blur(24px)" : null }}
