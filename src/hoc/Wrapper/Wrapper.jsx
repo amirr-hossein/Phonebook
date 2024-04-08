@@ -3,6 +3,7 @@ import axios from "axios";
 import ModalAddContact from "../../components/AddContact/ModalAddContacts";
 import ModalDeleteContact from "../../components/ModalDeleteContact/ModalDeleteContact";
 import All from "../All/All";
+
 function Wrapper() {
   const [isModal, setIsModal] = useState(false);
   const [isModalDelete, setIsModalDelete] = useState(false);
@@ -21,17 +22,22 @@ function Wrapper() {
     job: "",
     group: "",
   });
+  const [selectedContactId, setSelectedContactId] = useState(null); // Add this line
+
   const modalShow = () => {
     setIsModal(true);
   };
+
   const closeModal = () => {
     setIsModal(false);
   };
+
   const formatPhoneNumber = (value) => {
     if (!value) return value;
     const phoneNumber = value.replace(/\D/g, "");
     return phoneNumber.replace(/(\d{4})(\d{3})(\d{3})/, "$1 $2 $3");
   };
+
   const handleChangeMobile = (e) => {
     const value = e.target.value;
     const formattedValue = formatPhoneNumber(value);
@@ -171,28 +177,35 @@ function Wrapper() {
       setLoader(false);
     });
   }, []);
-  const deleteContact = (contactId) => {
-    setIsModalDelete(true)
-    // axios
-    //   .delete(`http://localhost:4000/contacts/${contactId}`)
-    //   .then((res) => {
-    //     console.log(
-    //       `Contact with ID ${contactId} deleted successfully: ${res}`
-    //     );
-    //     setContacts((prevContacts) =>
-    //       prevContacts.filter((c) => c.id !== contactId)
-    //     );
-    //   })
-    //   .catch((er) => {
-    //     console.error(
-    //       "Error deleting contact:",
-    //       er.response ? er.response.data : er.message
-    //     );
-    //   });
+
+  const deleteContactModal = (contactId) => {
+    axios
+      .delete(`http://localhost:4000/contacts/${contactId}`)
+      .then((res) => {
+        console.log(
+          `Contact with ID ${contactId} deleted successfully: ${res}`
+        );
+        setContacts((prevContacts) =>
+          prevContacts.filter((c) => c.id !== contactId)
+        );
+      })
+      .catch((er) => {
+        console.error(
+          "Error deleting contact:",
+          er.response ? er.response.data : er.message
+        );
+      });
   };
-  const closeModalDelete=()=>{
-    setIsModalDelete(false)
-  }
+
+  const deleteContact = (contactId) => {
+    setSelectedContactId(contactId); // Set the selected contact ID
+    setIsModalDelete(true);
+  };
+
+  const closeModalDelete = () => {
+    setIsModalDelete(false);
+  };
+
   return (
     <>
       {isModal ? (
@@ -212,7 +225,13 @@ function Wrapper() {
           setContact={setContact}
         />
       ) : null}
-      {isModalDelete ? <ModalDeleteContact stateModal={isModalDelete} modalBack={closeModalDelete} /> : null}
+      {isModalDelete ? (
+        <ModalDeleteContact
+          stateModal={isModalDelete}
+          modalBack={closeModalDelete}
+          deleteContact={() => deleteContactModal(selectedContactId)} // Pass the function here
+        />
+      ) : null}
       <div
         className="bg-[#F7F7F7] h-[100vh]"
         style={{ filter: isModal ? "blur(24px)" : null }}

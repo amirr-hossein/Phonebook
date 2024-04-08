@@ -1,5 +1,5 @@
 import Backdrop from "../Ui/Backdrop/Backdrop";
-const ModalDeleteContact = ({ stateModal, modalBack }) => {
+const ModalDeleteContact = ({ stateModal, modalBack, deleteContact }) => {
   return (
     <>
       <Backdrop close={modalBack} modal={stateModal} />
@@ -12,10 +12,16 @@ const ModalDeleteContact = ({ stateModal, modalBack }) => {
             آیا از حذف کردن این مخاطب مطمئن هستید؟
           </p>
           <div className="flex flex-row-reverse mr-[16px] mt-[16px]">
-            <div className="cursor-pointer ml-[16px] text-[14px] font-reg text-[#984447] flex justify-center items-center w-[51px] h-[40px] rounded-[12px] bg-[#EADADA] shEdit">
+            <div
+              onClick={deleteContact}
+              className="cursor-pointer ml-[16px] text-[14px] font-reg text-[#984447] flex justify-center items-center w-[51px] h-[40px] rounded-[12px] bg-[#EADADA] shEdit"
+            >
               حذف
             </div>
-            <div onClick={modalBack} className="cursor-pointer text-white text-[14px] font-reg w-[62px] h-[40px] rounded-[12px] bg-[#984447] shEdit flex justify-center items-center">
+            <div
+              onClick={modalBack}
+              className="cursor-pointer text-white text-[14px] font-reg w-[62px] h-[40px] rounded-[12px] bg-[#984447] shEdit flex justify-center items-center"
+            >
               انصراف
             </div>
           </div>
