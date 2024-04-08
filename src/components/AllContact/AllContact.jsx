@@ -1,8 +1,12 @@
 import Contact from "../Contact/Contact";
-const AllContact = ({ contacts, deleteContact }) => {
+const AllContact = ({ contacts, deleteContact, editContact }) => {
   return (
     <>
-      <Contact contacts={contacts} deleteContact={deleteContact} />
+      <Contact
+        contacts={contacts}
+        deleteContact={deleteContact}
+        editContact={editContact}
+      />
     </>
   );
 };

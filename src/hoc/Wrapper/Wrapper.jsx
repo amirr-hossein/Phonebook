@@ -2,10 +2,12 @@ import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import ModalAddContact from "../../components/AddContact/ModalAddContacts";
 import ModalDeleteContact from "../../components/ModalDeleteContact/ModalDeleteContact";
+import EditContact from "../../components/EditContact/EditContacts";
 import All from "../All/All";
 
 function Wrapper() {
   const [isModal, setIsModal] = useState(false);
+  const [isModalEditContact, setIsModalEditContact] = useState(false);
   const [isModalDelete, setIsModalDelete] = useState(false);
   const [loader, setLoader] = useState(true);
   const [uploadedImage, setUploadedImage] = useState("");
@@ -188,6 +190,7 @@ function Wrapper() {
         setContacts((prevContacts) =>
           prevContacts.filter((c) => c.id !== contactId)
         );
+        setIsModalDelete(false);
       })
       .catch((er) => {
         console.error(
@@ -198,14 +201,16 @@ function Wrapper() {
   };
 
   const deleteContact = (contactId) => {
-    setSelectedContactId(contactId); // Set the selected contact ID
+    setSelectedContactId(contactId);
     setIsModalDelete(true);
   };
 
   const closeModalDelete = () => {
     setIsModalDelete(false);
   };
-
+  const editContact = () => {
+    setIsModalEditContact(true);
+  };
   return (
     <>
       {isModal ? (
@@ -229,8 +234,11 @@ function Wrapper() {
         <ModalDeleteContact
           stateModal={isModalDelete}
           modalBack={closeModalDelete}
-          deleteContact={() => deleteContactModal(selectedContactId)} // Pass the function here
+          deleteContact={() => deleteContactModal(selectedContactId)}
         />
+      ) : null}
+      {isModalEditContact ? (
+        <EditContact stateModal={isModalEditContact}/>
       ) : null}
       <div
         className="bg-[#F7F7F7] h-[100vh]"
@@ -238,6 +246,7 @@ function Wrapper() {
       >
         <All
           loader={loader}
+          editContact={editContact}
           deleteContact={deleteContact}
           contacts={contacts}
           modalClicker={modalShow}

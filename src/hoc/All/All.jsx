@@ -2,7 +2,13 @@ import AllContact from "../../components/AllContact/AllContact";
 import Navbar from "../../components/Navbar/Navbar";
 import Loader from "../../components/Ui/loader/Loader";
 import { useState } from "react";
-const All = ({ modalClicker, loader, contacts,deleteContact }) => {
+const All = ({
+  modalClicker,
+  loader,
+  contacts,
+  deleteContact,
+  editContact,
+}) => {
   return (
     <>
       <div className="container mx-auto relative h-full">
@@ -12,7 +18,11 @@ const All = ({ modalClicker, loader, contacts,deleteContact }) => {
             <Loader />
           </div>
         ) : (
-          <AllContact deleteContact={deleteContact} contacts={contacts} />
+          <AllContact
+            deleteContact={deleteContact}
+            contacts={contacts}
+            editContact={editContact}
+          />
         )}
       </div>
     </>

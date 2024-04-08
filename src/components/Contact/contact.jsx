@@ -2,7 +2,7 @@ import brush from "../../assets/img/brush.png";
 import people from "../../assets/img/people.png";
 import trash from "../../assets/img/trash.png";
 import edit from "../../assets/img/edit-2.png";
-const Contact = ({contacts,deleteContact}) => {
+const Contact = ({contacts,deleteContact,editContact}) => {
 
   return (
     <>
@@ -42,7 +42,7 @@ const Contact = ({contacts,deleteContact}) => {
               {contact.info ? contact.info.mobile : null}
             </p>
             <div className="flex flex-row-reverse justify-center mt-[16px]">
-              <button className="flex flex-row-reverse bg-[#984447] shEdit items-center w-[93px] h-[40px] rounded-[12px] justify-center ml-[16px]">
+              <button onClick={editContact} className="flex flex-row-reverse bg-[#984447] shEdit items-center w-[93px] h-[40px] rounded-[12px] justify-center ml-[16px]">
                 <p className="text-white text-[14px] font-reg ml-[8px]">
                   ویرایش
                 </p>
