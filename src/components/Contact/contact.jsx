@@ -2,8 +2,7 @@ import brush from "../../assets/img/brush.png";
 import people from "../../assets/img/people.png";
 import trash from "../../assets/img/trash.png";
 import edit from "../../assets/img/edit-2.png";
-const Contact = ({contacts,deleteContact,editContact}) => {
-
+const Contact = ({ contacts, deleteContact, editContact }) => {
   return (
     <>
       <div className="flex flex-wrap gap-[24px] justify-center">
@@ -42,13 +41,20 @@ const Contact = ({contacts,deleteContact,editContact}) => {
               {contact.info ? contact.info.mobile : null}
             </p>
             <div className="flex flex-row-reverse justify-center mt-[16px]">
-              <button onClick={editContact} className="flex flex-row-reverse bg-[#984447] shEdit items-center w-[93px] h-[40px] rounded-[12px] justify-center ml-[16px]">
+              <button
+                onClick={() => editContact(contact.id)}
+                className="flex flex-row-reverse bg-[#984447] shEdit items-center w-[93px] h-[40px] rounded-[12px] justify-center ml-[16px]"
+              >
                 <p className="text-white text-[14px] font-reg ml-[8px]">
                   ویرایش
                 </p>
                 <img src={edit} alt="" />
               </button>
-              <button className="bg-[#F2CFCF] shDelete flex flex-row-reverse items-center w-[79px] h-[40px] rounded-[12px] justify-center" onClick={() => deleteContact(contact.id)}>
+
+              <button
+                className="bg-[#F2CFCF] shDelete flex flex-row-reverse items-center w-[79px] h-[40px] rounded-[12px] justify-center"
+                onClick={() => deleteContact(contact.id)}
+              >
                 <p className="text-[#BF0F0F] text-[14px] font-reg ml-[8px] mt-[4px]">
                   حذف
                 </p>{" "}

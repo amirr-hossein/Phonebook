@@ -6,6 +6,7 @@ import EditContact from "../../components/EditContact/EditContacts";
 import All from "../All/All";
 
 function Wrapper() {
+  const [selectedContact, setSelectedContact] = useState(null);
   const [isModal, setIsModal] = useState(false);
   const [isModalEditContact, setIsModalEditContact] = useState(false);
   const [isModalDelete, setIsModalDelete] = useState(false);
@@ -17,6 +18,7 @@ function Wrapper() {
   const [update, setUpdate] = useState(false);
   const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(true);
   const [contacts, setContacts] = useState([]);
+  const [selectedContactId, setSelectedContactId] = useState(null); // Add this line
   const [getContact, setContact] = useState({
     id: Date.now().toString(),
     fullname: "",
@@ -24,8 +26,12 @@ function Wrapper() {
     job: "",
     group: "",
   });
-  const [selectedContactId, setSelectedContactId] = useState(null); // Add this line
-
+  const setContactInfo = (event) => {
+    setContact({
+      ...getContact,
+      [event.target.name]: event.target.value,
+    });
+  };
   const modalShow = () => {
     setIsModal(true);
   };
@@ -208,8 +214,13 @@ function Wrapper() {
   const closeModalDelete = () => {
     setIsModalDelete(false);
   };
-  const editContact = () => {
+  const editContact = (contact) => {
+    setSelectedContact(contact);
     setIsModalEditContact(true);
+  };
+
+  const closeModalEdit = () => {
+    setIsModalEditContact(false);
   };
   return (
     <>
@@ -228,6 +239,7 @@ function Wrapper() {
           getGroups={getGroups}
           send={send}
           setContact={setContact}
+          setContactInfo={setContactInfo}
         />
       ) : null}
       {isModalDelete ? (
@@ -238,7 +250,22 @@ function Wrapper() {
         />
       ) : null}
       {isModalEditContact ? (
-        <EditContact stateModal={isModalEditContact}/>
+        <EditContact
+          handleFileChange={handleFileChange}
+          deleteImage={deleteImage}
+          uploadedImage={uploadedImage}
+          getFile={getFile}
+          files={files}
+          getGroups={getGroups}
+          stateModal={isModalEditContact}
+          contact={selectedContact}
+          setContact={setContact}
+          closeModal={closeModalEdit}
+          editContact={closeModalEdit}
+          handleChangeMobile={handleChangeMobile}
+          isValidPhoneNumber={isValidPhoneNumber}
+          getContact={getContact}
+        />
       ) : null}
       <div
         className="bg-[#F7F7F7] h-[100vh]"
@@ -246,7 +273,7 @@ function Wrapper() {
       >
         <All
           loader={loader}
-          editContact={editContact}
+          editContact={editContact} // ارسال تابع ویرایش به All
           deleteContact={deleteContact}
           contacts={contacts}
           modalClicker={modalShow}

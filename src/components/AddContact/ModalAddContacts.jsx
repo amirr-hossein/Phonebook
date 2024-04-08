@@ -15,6 +15,7 @@ const ModalAddContact = ({
   getGroups,
   send,
   setContact,
+  setContactInfo,
 }) => {
   return (
     <>
@@ -31,6 +32,7 @@ const ModalAddContact = ({
         getGroups={getGroups}
         send={send}
         setContact={setContact}
+        handleChange={setContactInfo}
       />
     </>
   );

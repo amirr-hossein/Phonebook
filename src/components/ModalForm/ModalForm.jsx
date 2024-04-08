@@ -17,13 +17,15 @@ const ModalForm = ({
   getGroups,
   send,
   setContact,
+  isEditMode = false, // پیش‌فرض حالت اضافه کردن
+  handleChange,
 }) => {
   return (
     <>
       <div className="flex justify-center modals">
         <div className="w-[358px] h-[632px] rounded-[24px] bg-[#F7F7F7]">
           <h1 className="font-bol text-[32px] mt-[16px] flex justify-center">
-            افزودن مخاطب
+            {isEditMode ? "ویرایش مخاطب" : "افزودن مخاطب"}
           </h1>
           <div className="flex justify-center mt-[16px]">
             <div className="w-[120px] h-[120px] rounded-full bg-white flex justify-center items-center overflow-hidden">
@@ -79,9 +81,7 @@ const ModalForm = ({
                     dir="rtl"
                     name="fullname"
                     value={getContact.fullname}
-                    onChange={(e) =>
-                      setContact({ ...getContact, fullname: e.target.value })
-                    }
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -136,9 +136,7 @@ const ModalForm = ({
                     dir="rtl"
                     name="job"
                     value={getContact.job}
-                    onChange={(e) =>
-                      setContact({ ...getContact, job: e.target.value })
-                    }
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -161,9 +159,7 @@ const ModalForm = ({
                     dir="rtl"
                     name="group"
                     value={getContact.group}
-                    onChange={(e) =>
-                      setContact({ ...getContact, group: e.target.value })
-                    }
+                    onChange={handleChange}
                   >
                     <option
                       className="text-[#aaa] text-[12px] font-reg"
@@ -189,7 +185,7 @@ const ModalForm = ({
                   className="w-[326px] h-[40px] rounded-[12px] bg-[#984447] text-white text-[14px] font-reg"
                   onClick={send}
                 >
-                  افزودن مخاطب
+                  {isEditMode ? "ویرایش مخاطب" : "افزودن مخاطب"}
                 </button>
               </div>
             </div>
