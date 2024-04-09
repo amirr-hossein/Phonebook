@@ -1,6 +1,23 @@
-import iconSearch from "../../assets/img/iconSearch.png";
 import add from "../../assets/img/add.png";
-const Navbar = ({modal}) => {
+import SearchContact from "../SearchContact/SearchContact";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
+const Navbar = ({ modal }) => {
+  const [contacts, setContacts] = useState([]);
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    axios.get("http://localhost:4000/contacts").then((res) => {
+      setContacts(res.data);
+    });
+  }, []);
+
+  const filteredContacts = contacts.filter((contact) =>
+  // console.log(contact.info.fullname)
+  contact.info.fullname.includes(search)
+  );
+
   return (
     <>
       <div className="flex justify-center pt-[48px] mb-[32px] container mx-auto">
@@ -15,20 +32,12 @@ const Navbar = ({modal}) => {
           </div>
           <img className="absolute top-[10px] left-[8px]" src={add} alt="" />
         </div>
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="اسم مخاطب"
-            className="directionInputSearch outline-none border border-[#E6E6E6] border-solid rounded-[12px] w-[402px] h-[40px] bg-white pr-[8px] text-[12px] text-[#AAAAAA] font-med"
-          />
-          <img
-            className="absolute top-[10px] left-[16px]"
-            src={iconSearch}
-            alt=""
-          />
-        </div>
+        <SearchContact search={search} setSearch={setSearch} />
       </div>
+      {/* نمایش تعداد مخاطبین فیلتر شده */}
+      <p>تعداد مخاطبین فیلتر شده: {filteredContacts.length}</p>
     </>
   );
 };
+
 export default Navbar;

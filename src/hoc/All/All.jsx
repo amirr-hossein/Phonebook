@@ -8,11 +8,18 @@ const All = ({
   contacts,
   deleteContact,
   editContact,
+  filterContacts,
+  filteredContacts, // اضافه کردن این خط
 }) => {
   return (
     <>
       <div className="container mx-auto relative h-full">
-        <Navbar modal={modalClicker} />
+        <Navbar
+          modal={modalClicker}
+          filterContacts={filterContacts}
+          filteredContacts={filteredContacts}
+        />{" "}
+        {/* اضافه کردن filteredContacts */}
         {loader ? (
           <div className="flex justify-center h-[70%] items-center">
             <Loader />
@@ -28,4 +35,5 @@ const All = ({
     </>
   );
 };
+
 export default All;
