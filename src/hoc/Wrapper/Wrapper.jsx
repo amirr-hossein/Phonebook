@@ -18,7 +18,7 @@ function Wrapper() {
   const [update, setUpdate] = useState(false);
   const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(true);
   const [contacts, setContacts] = useState([]);
-  const [selectedContactId, setSelectedContactId] = useState(null); // Add this line
+  const [selectedContactId, setSelectedContactId] = useState(null);
   const [getContact, setContact] = useState({
     id: Date.now().toString(),
     fullname: "",
@@ -178,14 +178,6 @@ function Wrapper() {
     }
   }, [getContact.mobile]);
 
-  useEffect(() => {
-    // Fetch contacts from the server
-    axios.get("http://localhost:4000/contacts").then((response) => {
-      setContacts(response.data);
-      setLoader(false);
-    });
-  }, []);
-
   const deleteContactModal = (contactId) => {
     axios
       .delete(`http://localhost:4000/contacts/${contactId}`)
@@ -205,7 +197,13 @@ function Wrapper() {
         );
       });
   };
-
+  useEffect(() => {
+    // Fetch contacts from the server
+    axios.get("http://localhost:4000/contacts").then((response) => {
+      setContacts(response.data);
+      setLoader(false);
+    });
+  }, []);
   const deleteContact = (contactId) => {
     setSelectedContactId(contactId);
     setIsModalDelete(true);
@@ -277,6 +275,7 @@ function Wrapper() {
           deleteContact={deleteContact}
           contacts={contacts}
           modalClicker={modalShow}
+          setContacts={setContacts}
         />
       </div>
     </>

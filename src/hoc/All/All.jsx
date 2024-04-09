@@ -10,6 +10,7 @@ const All = ({
   editContact,
   filterContacts,
   filteredContacts, // اضافه کردن این خط
+  setContacts,
 }) => {
   return (
     <>
@@ -22,6 +23,7 @@ const All = ({
           deleteContact={deleteContact}
           contacts={contacts}
           loader={loader}
+          setContacts={setContacts}
         />{" "}
         {/* اضافه کردن filteredContacts */}
         {/* {loader ? (

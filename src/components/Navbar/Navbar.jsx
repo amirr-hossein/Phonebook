@@ -1,12 +1,18 @@
 import add from "../../assets/img/add.png";
 import SearchContact from "../SearchContact/SearchContact";
-import Contact from "../Contact/Contact"; // اضافه کردن کامپوننت Contact
+import AllContact from "../AllContact/AllContact"; // اضافه کردن کامپوننت Contact
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "../../components/Ui/loader/Loader";
 
-const Navbar = ({ modal, editContact, deleteContact, loader }) => {
-  const [contacts, setContacts] = useState([]);
+const Navbar = ({
+  modal,
+  editContact,
+  deleteContact,
+  loader,
+  contacts,
+  setContacts,
+}) => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -41,10 +47,10 @@ const Navbar = ({ modal, editContact, deleteContact, loader }) => {
           <Loader />
         </div>
       ) : (
-        <Contact
+        <AllContact
           contacts={search ? filteredContacts : contacts}
-          deleteContact={deleteContact} // فرضا تابع deleteContact را اضافه کنید
-          editContact={editContact} // فرضا تابع editContact را اضافه کنید
+          deleteContact={deleteContact}
+          editContact={editContact}
         />
       )}
     </>
