@@ -18,9 +18,13 @@ const All = ({
           modal={modalClicker}
           filterContacts={filterContacts}
           filteredContacts={filteredContacts}
+          editContact={editContact}
+          deleteContact={deleteContact}
+          contacts={contacts}
+          loader={loader}
         />{" "}
         {/* اضافه کردن filteredContacts */}
-        {loader ? (
+        {/* {loader ? (
           <div className="flex justify-center h-[70%] items-center">
             <Loader />
           </div>
@@ -30,7 +34,7 @@ const All = ({
             contacts={contacts}
             editContact={editContact}
           />
-        )}
+        )} */}
       </div>
     </>
   );

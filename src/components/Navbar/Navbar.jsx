@@ -1,9 +1,11 @@
 import add from "../../assets/img/add.png";
 import SearchContact from "../SearchContact/SearchContact";
+import Contact from "../Contact/Contact"; // اضافه کردن کامپوننت Contact
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Loader from "../../components/Ui/loader/Loader";
 
-const Navbar = ({ modal }) => {
+const Navbar = ({ modal, editContact, deleteContact, loader }) => {
   const [contacts, setContacts] = useState([]);
   const [search, setSearch] = useState("");
 
@@ -14,8 +16,7 @@ const Navbar = ({ modal }) => {
   }, []);
 
   const filteredContacts = contacts.filter((contact) =>
-  // console.log(contact.info.fullname)
-  contact.info.fullname.includes(search)
+    contact.info?.fullname?.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -34,8 +35,18 @@ const Navbar = ({ modal }) => {
         </div>
         <SearchContact search={search} setSearch={setSearch} />
       </div>
-      {/* نمایش تعداد مخاطبین فیلتر شده */}
-      <p>تعداد مخاطبین فیلتر شده: {filteredContacts.length}</p>
+      {/* نمایش کانتکت‌ها */}
+      {loader ? (
+        <div className="flex justify-center h-[70%] items-center">
+          <Loader />
+        </div>
+      ) : (
+        <Contact
+          contacts={search ? filteredContacts : contacts}
+          deleteContact={deleteContact} // فرضا تابع deleteContact را اضافه کنید
+          editContact={editContact} // فرضا تابع editContact را اضافه کنید
+        />
+      )}
     </>
   );
 };
