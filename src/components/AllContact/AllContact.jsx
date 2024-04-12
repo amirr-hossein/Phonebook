@@ -2,12 +2,17 @@ import Contact from "../Contact/Contact";
 const AllContact = ({ contacts, deleteContact, editContact }) => {
   return (
     <>
-      <Contact
-        contacts={contacts}
-        deleteContact={deleteContact}
-        editContact={editContact}
-      />
+      {contacts.length === 0 ? (
+        <p>موجود نیست</p>
+      ) : (
+        <Contact
+          contacts={contacts}
+          deleteContact={deleteContact}
+          editContact={editContact}
+        />
+      )}
     </>
   );
 };
+
 export default AllContact;

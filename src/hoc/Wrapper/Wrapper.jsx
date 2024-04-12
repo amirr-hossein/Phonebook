@@ -276,6 +276,7 @@ function Wrapper() {
           contacts={contacts}
           modalClicker={modalShow}
           setContacts={setContacts}
+          setLoader={setLoader}
         />
       </div>
     </>

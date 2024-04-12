@@ -11,6 +11,7 @@ const All = ({
   filterContacts,
   filteredContacts, // اضافه کردن این خط
   setContacts,
+  setLoader,
 }) => {
   return (
     <>
@@ -24,19 +25,8 @@ const All = ({
           contacts={contacts}
           loader={loader}
           setContacts={setContacts}
+          setLoader={setLoader}
         />{" "}
-        {/* اضافه کردن filteredContacts */}
-        {/* {loader ? (
-          <div className="flex justify-center h-[70%] items-center">
-            <Loader />
-          </div>
-        ) : (
-          <AllContact
-            deleteContact={deleteContact}
-            contacts={contacts}
-            editContact={editContact}
-          />
-        )} */}
       </div>
     </>
   );

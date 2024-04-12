@@ -12,12 +12,14 @@ const Navbar = ({
   loader,
   contacts,
   setContacts,
+  setLoader
 }) => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
     axios.get("http://localhost:4000/contacts").then((res) => {
       setContacts(res.data);
+      setLoader(false)
     });
   }, []);
 
