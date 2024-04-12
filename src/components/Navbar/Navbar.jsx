@@ -54,6 +54,7 @@ const Navbar = ({
           contacts={search ? filteredContacts : contacts}
           deleteContact={deleteContact}
           editContact={editContact}
+          modal={modal}
         />
       )}
     </>
