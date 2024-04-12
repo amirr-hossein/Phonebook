@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import Backdrop from "../Ui/Backdrop/Backdrop";
 const ModalDeleteContact = ({ stateModal, modalBack, deleteContact }) => {
   return (
@@ -31,4 +33,4 @@ const ModalDeleteContact = ({ stateModal, modalBack, deleteContact }) => {
   );
 };
 
-export default ModalDeleteContact;
+export default memo(ModalDeleteContact);

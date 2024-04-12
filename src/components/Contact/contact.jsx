@@ -2,6 +2,8 @@ import brush from "../../assets/img/brush.png";
 import people from "../../assets/img/people.png";
 import trash from "../../assets/img/trash.png";
 import edit from "../../assets/img/edit-2.png";
+import { memo } from "react";
+
 const Contact = ({ contacts, deleteContact, editContact }) => {
   return (
     <>
@@ -68,4 +70,4 @@ const Contact = ({ contacts, deleteContact, editContact }) => {
   );
 };
 
-export default Contact;
+export default memo(Contact);

@@ -1,4 +1,5 @@
 import iconSearch from "../../assets/img/iconSearch.png";
+import { memo } from "react";
 
 const SearchContact = ({ search, setSearch }) => {
   return (
@@ -21,4 +22,4 @@ const SearchContact = ({ search, setSearch }) => {
   );
 };
 
-export default SearchContact;
+export default memo(SearchContact);

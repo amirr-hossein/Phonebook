@@ -4,6 +4,7 @@ import AllContact from "../AllContact/AllContact"; // اضافه کردن کام
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "../../components/Ui/loader/Loader";
+import { memo } from "react";
 
 const Navbar = ({
   modal,
@@ -59,4 +60,4 @@ const Navbar = ({
   );
 };
 
-export default Navbar;
+export default memo(Navbar);

@@ -1,6 +1,6 @@
 import Backdrop from "../Ui/Backdrop/Backdrop";
 import ModalForm from "../ModalForm/ModalForm";
-
+import { memo } from "react";
 const ModalAddContact = ({
   modalBack,
   stateModal,
@@ -38,4 +38,4 @@ const ModalAddContact = ({
   );
 };
 
-export default ModalAddContact;
+export default memo(ModalAddContact);

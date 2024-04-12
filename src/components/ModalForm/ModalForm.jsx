@@ -5,6 +5,8 @@ import user from "../../assets/img/user.png";
 import call from "../../assets/img/call.png";
 import brush from "../../assets/img/brush.png";
 import people from "../../assets/img/people.png";
+import { memo } from "react";
+
 const ModalForm = ({
   uploadedImage,
   getFile,
@@ -16,7 +18,6 @@ const ModalForm = ({
   isValidPhoneNumber,
   getGroups,
   send,
-  setContact,
   isEditMode = false, // پیش‌فرض حالت اضافه کردن
   handleChange,
 }) => {
@@ -196,4 +197,4 @@ const ModalForm = ({
   );
 };
 
-export default ModalForm;
+export default memo(ModalForm);

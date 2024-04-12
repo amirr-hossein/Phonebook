@@ -1,7 +1,6 @@
-import AllContact from "../../components/AllContact/AllContact";
+
 import Navbar from "../../components/Navbar/Navbar";
-import Loader from "../../components/Ui/loader/Loader";
-import { useState } from "react";
+import { memo } from "react";
 const All = ({
   modalClicker,
   loader,
@@ -32,4 +31,4 @@ const All = ({
   );
 };
 
-export default All;
+export default memo(All);

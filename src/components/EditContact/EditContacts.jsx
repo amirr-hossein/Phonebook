@@ -1,6 +1,7 @@
 import ModalForm from "../ModalForm/ModalForm";
 import Backdrop from "../Ui/Backdrop/Backdrop";
 import axios from "axios";
+import { memo } from "react";
 
 const EditContact = ({
   stateModal,
@@ -35,7 +36,6 @@ const EditContact = ({
       ],
       info: getContact,
     };
-    // ارسال تغییرات به سرور
     axios
       .put(`http://localhost:4000/contacts/${contact}`, datas)
       .then((res) => {
@@ -75,4 +75,4 @@ const EditContact = ({
   );
 };
 
-export default EditContact;
+export default memo(EditContact);

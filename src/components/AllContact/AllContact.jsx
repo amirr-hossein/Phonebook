@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Contact from "../Contact/Contact";
 const AllContact = ({ contacts, deleteContact, editContact }) => {
   return (
@@ -15,4 +16,4 @@ const AllContact = ({ contacts, deleteContact, editContact }) => {
   );
 };
 
-export default AllContact;
+export default memo(AllContact);

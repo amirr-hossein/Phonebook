@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect,memo } from "react";
 import axios from "axios";
 import ModalAddContact from "../../components/AddContact/ModalAddContacts";
 import ModalDeleteContact from "../../components/ModalDeleteContact/ModalDeleteContact";
@@ -283,4 +283,4 @@ function Wrapper() {
   );
 }
 
-export default Wrapper;
+export default memo(Wrapper);
