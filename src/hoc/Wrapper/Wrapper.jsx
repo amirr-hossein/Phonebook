@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect,memo } from "react";
+import { useState, useRef, useEffect, memo } from "react";
 import axios from "axios";
 import ModalAddContact from "../../components/AddContact/ModalAddContacts";
 import ModalDeleteContact from "../../components/ModalDeleteContact/ModalDeleteContact";
@@ -42,23 +42,37 @@ function Wrapper() {
 
   const formatPhoneNumber = (value) => {
     if (!value) return value;
+
+    // حذف همه کاراکترهای غیر عددی
     const phoneNumber = value.replace(/\D/g, "");
+
+    // افزودن فاصله‌های مورد نظر
     return phoneNumber.replace(/(\d{4})(\d{3})(\d{3})/, "$1 $2 $3");
   };
 
   const handleChangeMobile = (e) => {
-    const value = e.target.value;
-    const formattedValue = formatPhoneNumber(value);
+    let value = e.target.value;
 
-    if (value.trim() === "" || formattedValue === value) {
+    // فیلتر کردن ورودی به اعداد
+    value = value.replace(/\D/g, "");
+
+    var regex = new RegExp(/^09[0-9]{9}$/);
+    let testValue = regex.test(value);
+    console.log(testValue);
+
+    if (value.trim() === "") {
+      setIsValidPhoneNumber(true);
+    } else if (testValue) {
       setIsValidPhoneNumber(true);
     } else {
       setIsValidPhoneNumber(false);
     }
 
+    const formattedValue = formatPhoneNumber(value)
+
     setContact({
       ...getContact,
-      [e.target.name]: formattedValue,
+      [e.target.name]: value.trim() === "" ? value : formattedValue,
     });
   };
 
@@ -168,15 +182,6 @@ function Wrapper() {
         });
     }, 6000);
   }, [data, update]);
-
-  useEffect(() => {
-    if (getContact.mobile) {
-      setContact({
-        ...getContact,
-        mobile: formatPhoneNumber(getContact.mobile),
-      });
-    }
-  }, [getContact.mobile]);
 
   const deleteContactModal = (contactId) => {
     axios
