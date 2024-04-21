@@ -42,11 +42,7 @@ function Wrapper() {
 
   const formatPhoneNumber = (value) => {
     if (!value) return value;
-
-    // حذف همه کاراکترهای غیر عددی
     const phoneNumber = value.replace(/\D/g, "");
-
-    // افزودن فاصله‌های مورد نظر
     return phoneNumber.replace(/(\d{4})(\d{3})(\d{3})/, "$1 $2 $3");
   };
 
@@ -276,7 +272,7 @@ function Wrapper() {
       >
         <All
           loader={loader}
-          editContact={editContact} // ارسال تابع ویرایش به All
+          editContact={editContact}
           deleteContact={deleteContact}
           contacts={contacts}
           modalClicker={modalShow}

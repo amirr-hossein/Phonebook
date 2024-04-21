@@ -8,7 +8,7 @@ const All = ({
   deleteContact,
   editContact,
   filterContacts,
-  filteredContacts, // اضافه کردن این خط
+  filteredContacts,
   setContacts,
   setLoader,
 }) => {

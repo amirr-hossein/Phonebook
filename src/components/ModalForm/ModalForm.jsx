@@ -18,7 +18,7 @@ const ModalForm = ({
   isValidPhoneNumber,
   getGroups,
   send,
-  isEditMode = false, // پیش‌فرض حالت اضافه کردن
+  isEditMode = false,
   handleChange,
 }) => {
   return (
