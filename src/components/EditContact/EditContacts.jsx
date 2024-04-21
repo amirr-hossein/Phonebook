@@ -1,7 +1,7 @@
 import ModalForm from "../ModalForm/ModalForm";
 import Backdrop from "../Ui/Backdrop/Backdrop";
 import axios from "axios";
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 
 const EditContact = ({
   stateModal,
@@ -19,6 +19,26 @@ const EditContact = ({
   isValidPhoneNumber,
   getContact,
 }) => {
+  const [contactEdit, setContactEdit] = useState([]);
+  const [selectContact, setSelectContact] = useState();
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/contacts")
+      .then((res) => {
+        setContactEdit(res.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching contacts:", error);
+      });
+  }, []);
+
+  // useEffect(() => {
+    let filteredContacts = contactEdit.filter((c) => c.id===contact);
+    // console.log(filteredContacts[0].info.job)
+  //   return filteredContacts
+  // }, [contactEdit]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setContact((prevContact) => ({
@@ -70,6 +90,7 @@ const EditContact = ({
         send={handleSubmit}
         handleChangeMobile={handleChangeMobile}
         isValidPhoneNumber={isValidPhoneNumber}
+        filteredContacts={filteredContacts}
       />
     </>
   );

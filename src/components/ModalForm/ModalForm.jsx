@@ -20,6 +20,7 @@ const ModalForm = ({
   send,
   isEditMode = false,
   handleChange,
+  filteredContacts,
 }) => {
   return (
     <>
@@ -81,7 +82,13 @@ const ModalForm = ({
                     className="outline-none rounded-[12px] border border-solid border-[#E6E6E6] w-[326px] h-[40px] bg-white pr-[33px] text-[#aaa] text-[12px] font-reg"
                     dir="rtl"
                     name="fullname"
-                    value={getContact.fullname}
+                    value={
+                      isEditMode &&
+                      filteredContacts.length > 0 &&
+                      filteredContacts[0].info
+                        ? filteredContacts[0].info.fullname
+                        : getContact.fullname
+                    }
                     onChange={handleChange}
                   />
                 </div>
@@ -105,7 +112,13 @@ const ModalForm = ({
                     className="outline-none rounded-[12px] border border-solid border-[#E6E6E6] w-[326px] h-[40px] bg-white pr-[33px] text-[#aaa] text-[12px] font-reg"
                     dir="ltr"
                     name="mobile"
-                    value={getContact.mobile}
+                    value={
+                      isEditMode &&
+                      filteredContacts.length > 0 &&
+                      filteredContacts[0].info
+                        ? filteredContacts[0].info.mobile
+                        : getContact.mobile
+                    }
                     onChange={handleChangeMobile}
                   />
                   <div className="flex justify-end">
@@ -136,7 +149,13 @@ const ModalForm = ({
                     className="outline-none rounded-[12px] border border-solid border-[#E6E6E6] w-[326px] h-[40px] bg-white pr-[33px] text-[#aaa] text-[12px] font-reg"
                     dir="rtl"
                     name="job"
-                    value={getContact.job}
+                    value={
+                      isEditMode &&
+                      filteredContacts.length > 0 &&
+                      filteredContacts[0].info
+                        ? filteredContacts[0].info.job
+                        : getContact.job
+                    }
                     onChange={handleChange}
                   />
                 </div>
@@ -159,7 +178,13 @@ const ModalForm = ({
                     className="outline-none rounded-[12px] border border-solid border-[#E6E6E6] w-[326px] h-[40px] bg-white pr-[33px] pl-[16px] text-[#aaa] text-[12px] font-reg"
                     dir="rtl"
                     name="group"
-                    value={getContact.group}
+                    value={
+                      isEditMode &&
+                      filteredContacts.length > 0 &&
+                      filteredContacts[0].info
+                        ? filteredContacts[0].info.group
+                        : getContact.group
+                    }
                     onChange={handleChange}
                   >
                     <option
