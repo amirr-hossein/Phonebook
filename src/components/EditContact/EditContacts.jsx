@@ -34,19 +34,29 @@ const EditContact = ({
   }, []);
 
   // useEffect(() => {
-    let filteredContacts = contactEdit.filter((c) => c.id===contact);
-    // console.log(filteredContacts[0].info.job)
+  let filteredContacts = contactEdit.find((c) => c.id === contact);
+  if (filteredContacts && filteredContacts.info) {
+    console.log(filteredContacts.info.fullname);
+
+    setContact(filteredContacts);
+  } else {
+    console.log("fullname is not available");
+  }
+
+  // console.log(filteredContacts[0].images.image)
   //   return filteredContacts
   // }, [contactEdit]);
 
-  const handleChange = (e) => {
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setContact((prevContact) => ({
+  //     ...prevContact,
+  //     [name]: value,
+  //   }));
+  // };
+  const change = (e) => {
     const { name, value } = e.target;
-    setContact((prevContact) => ({
-      ...prevContact,
-      [name]: value,
-    }));
   };
-
   const handleSubmit = () => {
     const datas = {
       images: [
@@ -91,6 +101,7 @@ const EditContact = ({
         handleChangeMobile={handleChangeMobile}
         isValidPhoneNumber={isValidPhoneNumber}
         filteredContacts={filteredContacts}
+        change={change}
       />
     </>
   );

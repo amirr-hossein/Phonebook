@@ -21,7 +21,15 @@ const ModalForm = ({
   isEditMode = false,
   handleChange,
   filteredContacts,
+  change
 }) => {
+  const imageSrc =
+    isEditMode &&
+    filteredContacts &&
+    filteredContacts.length > 0 &&
+    filteredContacts[0].images &&
+    filteredContacts[0].images.length > 0 &&
+    filteredContacts[0].images[0].image;
   return (
     <>
       <div className="flex justify-center modals">
@@ -33,7 +41,13 @@ const ModalForm = ({
             <div className="w-[120px] h-[120px] rounded-full bg-white flex justify-center items-center overflow-hidden">
               <img
                 className="object-cover rounded-full cursor-pointer"
-                src={uploadedImage || gallaryAdd}
+                src={
+                  isEditMode && imageSrc
+                    ? imageSrc
+                    : uploadedImage
+                    ? uploadedImage
+                    : gallaryAdd
+                }
                 alt=""
               />
             </div>
@@ -84,12 +98,11 @@ const ModalForm = ({
                     name="fullname"
                     value={
                       isEditMode &&
-                      filteredContacts.length > 0 &&
-                      filteredContacts[0].info
-                        ? filteredContacts[0].info.fullname
-                        : getContact.fullname
+                      filteredContacts &&
+                      filteredContacts.info &&
+                      filteredContacts.info.fullname
                     }
-                    onChange={handleChange}
+                    onChange={isEditMode?handleChange:change}
                   />
                 </div>
               </div>
@@ -114,7 +127,9 @@ const ModalForm = ({
                     name="mobile"
                     value={
                       isEditMode &&
+                      filteredContacts &&
                       filteredContacts.length > 0 &&
+                      filteredContacts[0] &&
                       filteredContacts[0].info
                         ? filteredContacts[0].info.mobile
                         : getContact.mobile
@@ -151,7 +166,9 @@ const ModalForm = ({
                     name="job"
                     value={
                       isEditMode &&
+                      filteredContacts &&
                       filteredContacts.length > 0 &&
+                      filteredContacts[0] &&
                       filteredContacts[0].info
                         ? filteredContacts[0].info.job
                         : getContact.job
@@ -180,7 +197,9 @@ const ModalForm = ({
                     name="group"
                     value={
                       isEditMode &&
+                      filteredContacts &&
                       filteredContacts.length > 0 &&
+                      filteredContacts[0] &&
                       filteredContacts[0].info
                         ? filteredContacts[0].info.group
                         : getContact.group
@@ -221,5 +240,4 @@ const ModalForm = ({
     </>
   );
 };
-
-export default memo(ModalForm);
+export default ModalForm;
