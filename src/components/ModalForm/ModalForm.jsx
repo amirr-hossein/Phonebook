@@ -22,18 +22,17 @@ const ModalForm = ({
   handleChange,
   filteredContacts,
 }) => {
-  const imageSrc =
-    isEditMode &&
-    filteredContacts &&
-    filteredContacts.length > 0 &&
-    filteredContacts[0] &&
-    filteredContacts[0].images &&
-    filteredContacts[0].images.length > 0 &&
-    filteredContacts[0].images[0].image
-      ? filteredContacts[0].images[0].image
-      : uploadedImage
-      ? uploadedImage
-      : gallaryAdd;
+  console.log(filteredContacts.images)
+  console.log(uploadedImage)
+  // const imageSrc =
+  //   isEditMode &&
+  //   filteredContacts &&
+  //   filteredContacts.length > 0 &&
+  //   filteredContacts[0] &&
+  //   filteredContacts[0].images &&
+  //   filteredContacts[0].images.length > 0
+  //     ? filteredContacts[0].images[0].image
+  //     : getContact.image;
 
   return (
     <>
@@ -46,13 +45,7 @@ const ModalForm = ({
             <div className="w-[120px] h-[120px] rounded-full bg-white flex justify-center items-center overflow-hidden">
               <img
                 className="object-cover rounded-full cursor-pointer"
-                src={
-                  isEditMode && imageSrc
-                    ? imageSrc
-                    : uploadedImage
-                    ? uploadedImage
-                    : gallaryAdd
-                }
+                src={uploadedImage}
                 alt=""
               />
             </div>
