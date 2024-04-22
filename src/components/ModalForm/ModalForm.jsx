@@ -21,15 +21,20 @@ const ModalForm = ({
   isEditMode = false,
   handleChange,
   filteredContacts,
-  change
 }) => {
   const imageSrc =
     isEditMode &&
     filteredContacts &&
     filteredContacts.length > 0 &&
+    filteredContacts[0] &&
     filteredContacts[0].images &&
     filteredContacts[0].images.length > 0 &&
-    filteredContacts[0].images[0].image;
+    filteredContacts[0].images[0].image
+      ? filteredContacts[0].images[0].image
+      : uploadedImage
+      ? uploadedImage
+      : gallaryAdd;
+
   return (
     <>
       <div className="flex justify-center modals">
@@ -99,10 +104,13 @@ const ModalForm = ({
                     value={
                       isEditMode &&
                       filteredContacts &&
-                      filteredContacts.info &&
-                      filteredContacts.info.fullname
+                      filteredContacts.length > 0 &&
+                      filteredContacts[0] &&
+                      filteredContacts[0].info
+                        ? filteredContacts[0].info.fullname
+                        : getContact.fullname
                     }
-                    onChange={isEditMode?handleChange:change}
+                    onChange={handleChange}
                   />
                 </div>
               </div>

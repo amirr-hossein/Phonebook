@@ -21,6 +21,7 @@ const EditContact = ({
 }) => {
   const [contactEdit, setContactEdit] = useState([]);
   const [selectContact, setSelectContact] = useState();
+  const [editedContact, setEditedContact] = useState({});
 
   useEffect(() => {
     axios
@@ -33,30 +34,22 @@ const EditContact = ({
       });
   }, []);
 
-  // useEffect(() => {
   let filteredContacts = contactEdit.find((c) => c.id === contact);
-  if (filteredContacts && filteredContacts.info) {
-    console.log(filteredContacts.info.fullname);
 
-    setContact(filteredContacts);
-  } else {
-    console.log("fullname is not available");
-  }
+  useEffect(() => {
+    if (filteredContacts && filteredContacts.info) {
+      setEditedContact(filteredContacts.info);
+    }
+  }, [filteredContacts]);
 
-  // console.log(filteredContacts[0].images.image)
-  //   return filteredContacts
-  // }, [contactEdit]);
-
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setContact((prevContact) => ({
-  //     ...prevContact,
-  //     [name]: value,
-  //   }));
-  // };
-  const change = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
+    setEditedContact((prevContact) => ({
+      ...prevContact,
+      [name]: value,
+    }));
   };
+
   const handleSubmit = () => {
     const datas = {
       images: [
@@ -64,12 +57,12 @@ const EditContact = ({
           image: uploadedImage,
         },
       ],
-      info: getContact,
+      info: editedContact,
     };
     axios
       .put(`http://localhost:4000/contacts/${contact}`, datas)
       .then((res) => {
-        setContact(getContact);
+        setContact(editedContact);
         console.log(res);
         console.log(
           `Contact with ID ${contact.id} updated successfully: ${res}`
@@ -94,14 +87,13 @@ const EditContact = ({
         getFile={getFile}
         files={files}
         getGroups={getGroups}
-        getContact={getContact}
+        getContact={editedContact}
         handleChange={handleChange}
         isEditMode={true}
         send={handleSubmit}
         handleChangeMobile={handleChangeMobile}
         isValidPhoneNumber={isValidPhoneNumber}
         filteredContacts={filteredContacts}
-        change={change}
       />
     </>
   );
